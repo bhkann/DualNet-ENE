@@ -14,5 +14,5 @@ Data preprocessing (`preprocessingroi_nrrd.py`); includes interpolation to 1x1x3
 
 1. Test script (`test_ene.py`)
 * Specifies default model and hyperparameters
-* Loads data (`data_ene_test.py`); includes intensity normalization; generation of "box input" (118x118x32) and "zoomed-in", size invariant input (32x32x32)
+* Loads data (`data_ene_test.py`); includes intensity normalization; generation of "box input" (118x118x32) and "zoomed in", size invariant input (32x32x32)
 * Runs model inference and saves results to csv
