@@ -12,7 +12,7 @@ from random import randint
 from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
 from scipy.ndimage import interpolation
-sys.path.append('/home/bhkann/git-repositories/hn-petct-net/data-utils')
+sys.path.append('/utils')
 from util import bbox2_3D
 from rescale import rescale, downsample_img
 import time
@@ -197,7 +197,7 @@ def get_data(mode, model_input_size, MULTI_PREDICTION, image_format, SAVE_CSV, S
     SPACING = (1,1,3) #"" 
     print("SPACING: ", SPACING)
     ###### READ IN LABELING DATA (HN_LN_Label.xlsx) #####
-    labels_df = pd.read_excel('/media/bhkann/HN_RES1/HN_DL/E3311_DL/E3311_LN_Label.xls') #, index_col=0)
+    labels_df = pd.read_excel('/E3311_LN_Label.csv') #, index_col=0)
     labels_df['LN_ID'] = labels_df['LN_ID'].str.slice_replace(5,6,'-')
     #labels_df.to_csv('/media/bhkann/HN_RES1/HN_DL/E3311_LN_LABEL.csv')
     #labels_df.LN_ID = labels_df['LN_ID'].str.replace('_','')
@@ -215,8 +215,8 @@ def get_data(mode, model_input_size, MULTI_PREDICTION, image_format, SAVE_CSV, S
     certain_dict = {}
     certain_dict = dict(zip(labels_df.LN_ID, labels_df.CertaintyOverall)) #1,2,3
 
-    PATH_image = '/media/bhkann/HN_RES1/HN_DL/E3311_DL/ENE_preprocess_nrrd/image_crop' + str(SPACING)
-    PATH_mask = '/media/bhkann/HN_RES1/HN_DL/E3311_DL/ENE_preprocess_nrrd/label_crop' + str(SPACING)
+    PATH_image = '/E3311_DL/ENE_preprocess_nrrd/image_crop' + str(SPACING)
+    PATH_mask = '/E3311_DL/ENE_preprocess_nrrd/label_crop' + str(SPACING)
 
     master_list_image_path = [os.path.join(PATH_image,f) for f in sorted(os.listdir(PATH_image))]
     master_list_mask_path = [os.path.join(PATH_mask,f) for f in sorted(os.listdir(PATH_mask))]

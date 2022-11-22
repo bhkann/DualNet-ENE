@@ -25,21 +25,6 @@ def load_dicom(slice_list):
             slices.append(slice)
         if t==slice_list[-1]:
             slices.append(slice2)
-        '''    
-        for s, t in zip(slice_list,slice_list[1:]):
-            slice = pydicom.read_file(s)
-            slice2 = pydicom.read_file(t)
-            try:
-                slice.SpacingBetweenSlices
-                if float(slice.SliceThickness) == float(slice.SpacingBetweenSlices):
-                    slices.append(slice)
-                    #slices = [pydicom.read_file(s) for s in slice_list]
-                else if float(slice.SliceThickness) == np.abs(slice.ImagePositionPatient[2] - slice2.ImagePositionPatient[2]):
-                    slices.append(slice)
-            except:
-                if float(slice.SliceThickness) == np.abs(slice.ImagePositionPatient[2] - slice2.ImagePositionPatient[2]):
-                    slices.append(slice)
-        '''
     try:
         # seriesDesc = slices[0].SeriesDescription
         slices.sort(key=lambda x: float(x.ImagePositionPatient[2]))
@@ -116,48 +101,6 @@ def getPixelArray(slices):
             image[slice_number] = image[slice_number].astype(np.int16)
         image[slice_number] += np.int16(intercept)
     return np.array(image, dtype=np.int16)
-            
-def getPixelArray_pet(slices, image_format):
-    image = np.stack([s.pixel_array for s in slices])
-    # Convert to int16 (from sometimes int16),
-    # should be possible as values should always be low enough (<32k)
-    image = image.astype(np.float32)
-    if image_format=='pet':
-        # Set outside-of-scan pixels to 0
-        # The intercept is usually -1024, so air is approximately 0
-        image[image == -2000] = 0
-        # Convert to Hounsfield units (HU)
-        for slice_number in range(len(slices)):
-            intercept = slices[slice_number].RescaleIntercept
-            slope = slices[slice_number].RescaleSlope
-            if slope != 1:
-                image[slice_number] = slope * image[slice_number].astype(np.float64)
-                #image[slice_number] = image[slice_number].astype(np.int16)
-            image[slice_number] += np.float32(intercept)
-            try:
-                tracer_activity = float(slices[1].RadiopharmaceuticalInformationSequence[0].RadionuclideTotalDose) * 2**(-(float(slices[1].AcquisitionTime) - float(slices[1].RadiopharmaceuticalInformationSequence[0].RadiopharmaceuticalStartTime))/float(slices[1].RadiopharmaceuticalInformationSequence[0].RadionuclideHalfLife))
-            #print("tracer activity:", tracer_activity)
-                if slices[1].PatientWeight == '':
-                    print("Patient weight not available, using default weights")
-                    if slices[1].PatientSex == 'M':
-                        bw = 90 * 1000 # based off CDC / NCHS website for avg male body weight in US
-                    else:
-                        bw = 78 * 1000 # based off CDC / NCHS website for avg female body weight in US
-                else:
-                    bw = float(slices[1].PatientWeight) * 1000
-                #bsa=float(slices[1].PatientWeight)**0.425 * (float(slices[1].PatientSize)*100)**0.725 * 0.007184
-                #print("BSA:", bsa)
-                #print("array slice sum:", np.sum(image[slice_number]))
-                image[slice_number] = image[slice_number] * bw / tracer_activity
-                #print("array slice sum after suv conversion:", np.sum(image[slice_number]))
-                # For PET: check Units BQML calculate SUV based on Kim et al, Journal Nuc Med 1994; USING GE HEALTHCARE CALC [AcquisitionTime instead of SeriesTime d/t anonymization]
-                #USE SUV-bw (b/c some pts had no height recorded)= GE healthcare calc (PET image Pixels) * (weight in grams) / (injected dose actual activity); actual activity = [tracer_activity * 2^( -(scan_time – measured_time) / half_life)
-                #alt: SUV-bsa; same but instead of weight use weight^0.425 * height^0.725 * 0.007184;
-            except:
-                print("No tracer activity in meta data; cannot calculate SUV")
-        print("array sum:", np.sum(image), " array (suv) max:", np.amax(image))
-    return np.array(image, dtype=np.float32)
-
 
 def run_core(dicom_dir, image_format):
     print ('Processing patient ', dicom_dir)

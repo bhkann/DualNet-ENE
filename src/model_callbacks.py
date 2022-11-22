@@ -35,25 +35,7 @@ class model_callbacks(keras.callbacks.Callback):
             self.model_to_save.save(self.dir_name + '/{}.h5'.format(self.run))
             self.best_val_loss = val_loss
             print("model saved.")
-        '''    
-        for i in range(0,len(self.val_data[0])):
-            image = self.val_data[0][i]
-            image_small = self.val_data[1][i]
-            label = self.val_data[2][i]
-            print('image shape:', image.shape, image_small.shape)
-            #label = label.reshape(1,*label.shape)
-            print('label truth:',label)
-            label_predict = self.model_to_save.predict([image.reshape(*image.shape,1),image_small.reshape(*image_small.shape,1)],batch_size=1) #.reshape(*image.shape,1),image_small.reshape(*image_small.shape,1)]) #.reshape(1,*image.shape))
-            print("prediction, truth", np.array([label_predict,label]))
-            #label_predict = np.squeeze(label_predict)
-            #label_predict[label_predict<0.5]=0
-            #label_predict[label_predict>=0.5]=1
-            
-            #dice_score = dice(np.squeeze(label), label_predict)
-            #self.val_dice_scores.append(dice_score)
-        #med_dice = median(self.val_dice_scores)
-        #print("validation average dice score: ", med_dice)
-        '''    
+
         # save logs (overwrite)
         np.save(self.dir_name + '/{}_loss.npy'.format(self.run), self.losses)
         np.save(self.dir_name + '/{}_val_loss.npy'.format(self.run), self.val_losses)
@@ -132,7 +114,7 @@ class roc_callback(keras.callbacks.Callback):
         
         print("current max AUC and epoch #: ", max(self.aucsece, default=0), self.aucsece.index(max(self.aucsece)))
         if roc_val_ece >= max(self.aucsece, default=0):
-            self.model.save('/media/bhkann/HN_RES1/' + self.dir_name + '/' + 'bestauc.h5')
+            self.model.save('/media/' + self.dir_name + '/' + 'bestauc.h5')
             print("best val auc so far. MODEL SAVED.")
         self.epochcurrent.append(epoch)
         print("auc appended to list.")
@@ -184,7 +166,7 @@ class roc_callback(keras.callbacks.Callback):
         self.threshold_best.append(best_threshold)
 
         df = pd.DataFrame(list(zip(self.epochcurrent,self.aucspos,self.aucsece,self.youden_max,self.threshold_best)),columns=['epoch','auc-pos','auc-ene','best-youden','best-threshold'])
-        df.to_csv('/media/bhkann/HN_RES1/' + self.dir_name + '/' + self.modelname + '_epoch_aucs_youdens.csv')
+        df.to_csv('/media/' + self.dir_name + '/' + self.modelname + '_epoch_aucs_youdens.csv')
         return
         
     def on_batch_begin(self, batch, logs={}):

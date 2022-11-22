@@ -1,10 +1,11 @@
-# DualNet-ENE (under construction)
+# DualNet-ENE
 Extranodal Extension (ENE) Identification on Computed Tomography with Deep Learning for Head and Neck Cancers
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a> [![arXiv](https://img.shields.io/badge/arXiv-2111.10480-b31b1b.svg)](https://arxiv.org/abs/2110.08424)
 
 Keywords: Deep Learning, Convolutional Neural Network, CT, Head and Neck, Cancer, extranodal extension
 
-This work is under review, and citation will be available upon publication.
+This work is under review, and citation will be available upon publication. Source code for the manuscript is now viewable in this repository. A fully usable, reproducible, open-access pipeline with trained model will be made available via www.modelhub.ai upon publication. Link will be included here and in the manuscript.
+
 
 ## Introduction
 Extranodal extension (ENE) occurs when tumor infiltrates through the lymph node capsule in the surrounding tissue. In head and neck cancer, ENE is an important factor for prognostication and treatment decision-making for head and neck cancer. ENE can only be diagnosed on surgical pathology, and it is very difficult for radiologists to predict ENE based on CT scans. DualNet-ENE is a deep learning, 3D-CNN model that has been trained on multi-institutional datasets of pathologically-annotated lymph nodes to accurately and reliably predict nodal metastasis and ENE ([Kann et al, Scientific Reports, 2018](https://www.nature.com/articles/s41598-018-32441-y), [Kann et al, Journal of Clinical Oncology, 2020](https://pubmed.ncbi.nlm.nih.gov/31815574/)). DualNet-ENE accepts a head and neck CT scan and a manually segmented lymph node mask as input. It outputs the probability of extranodal extension and nodal metastasis at the lymph node-level.

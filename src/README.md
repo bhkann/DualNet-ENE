@@ -1,4 +1,4 @@
-# Source Code (under construction)
+# Source Code
 
 Here follows a brief description of how the source code is organised and what are the different steps of the processing.
 

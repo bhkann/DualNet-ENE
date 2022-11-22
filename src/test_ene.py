@@ -182,14 +182,7 @@ y_prob = np.array(results_certain.predict_ene).astype('float') #change based on 
 for j in threshold:
     y_pred = [1 if prob>=j else 0 for prob in y_prob]
     cm = confusion_matrix(results_certain['label_ene'].astype('float'), y_pred)  ##True, predicted
-    #FP = cm.sum(axis=0) - np.diag(cm)  
-    #FN = cm.sum(axis=1) - np.diag(cm)
-    #TP = np.diag(cm)
-    #TN = cm.sum() - (FP + FN + TP)
-    # Sensitivity, hit rate, recall, or true positive rate
-    #TPR = TP/(TP+FN)
-    # Specificity or true negative rate
-    #TNR = TN/(TN+FP) 
+
     TPR = cm[0,0]/(cm[0,0]+cm[0,1])
     TNR = cm[1,1]/(cm[1,0]+cm[1,1])
     Youden = TPR + TNR - 1
@@ -225,4 +218,4 @@ if SAVE_CSV:
         results_certain.to_csv(os.path.join(SAVE_DIR, 'ContourVariance_Studies', "testresults_contvar_{}_{}_{}.csv".format(DATASET,NAME,time.strftime("%Y%m%d-%H%M"))))
     else:
         results_certain.to_csv(os.path.join(SAVE_DIR, "testresults_{}_{}.csv".format(DATASET,NAME))) # Can choose lab drive vs HPC to save
-        results_certain.to_csv(os.path.join('/media/bhkann/HN_RES1/HN_DL/E3311_DL/E3311_analysis', "testresults_{}_{}.csv".format(DATASET,NAME)))
+        results_certain.to_csv(os.path.join('/E3311_DL/E3311_analysis', "testresults_{}_{}.csv".format(DATASET,NAME)))
