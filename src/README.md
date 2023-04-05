@@ -10,6 +10,11 @@ The pipeline requires paired CT image and segmentation both saved in native reso
 
 Data preprocessing (`preprocessingroi_nrrd.py`); includes interpolation to 1x1x3 mm spacing, 10 mm circumferential ROI dilation, cropping and centering the lymph node region of interest
 
+Note: The current script assumes that image and mask .nrrd files are saved with the following names:
+	Image: \[DATASET]\_\[PATIENT ID]\_CT_raw_raw_raw_xx.nrrd
+	Mask: mask3d_\[PATIENT ID]\_\[LYMPH NODE ID]\ (lymph node ID should start with '1' for a single node, and can increase sequentially if multiple lymph node segmentations are provided for a single scan)
+	PATIENT ID must be consistent between the Image and Mask filenames
+
 2) Test for ENE and Nodal Metastasis with DualNet
 
 1. Test script (`test_ene.py`)

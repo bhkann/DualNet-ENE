@@ -4,7 +4,7 @@ Extranodal Extension (ENE) Identification on Computed Tomography with Deep Learn
 
 Keywords: Deep Learning, Convolutional Neural Network, CT, Head and Neck, Cancer, extranodal extension
 
-This work is under review, and citation will be available upon publication. Source code for the manuscript is now viewable in this repository. A fully usable, reproducible, open-access pipeline with trained model will be made available via www.modelhub.ai upon publication. Link will be included here and in the manuscript.
+This work is under review, and citation will be available upon publication. Source code for the manuscript is now viewable in this repository. A fully usable, reproducible, open-access pipeline with trained model will be made available via www.modelhub.ai upon publication. Link will be included here.
 
 
 ## Introduction
