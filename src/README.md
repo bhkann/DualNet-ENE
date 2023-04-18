@@ -18,7 +18,9 @@ Note: The current script assumes that image and mask .nrrd files are saved with 
 2) Test for ENE and Nodal Metastasis with DualNet
 
 1. Test script (`test_ene.py`)
-* Specifies default model and hyperparameters. Model used in manuscript can be found here: https://drive.google.com/file/d/1BL1s-0NtIbT0BTMBldUbDu_et5QesIzJ/view?usp=share_link
+* Specifies default model and hyperparameters. 
 * Loads data (`data_ene_test.py`); includes intensity normalization; generation of "box input" (118x118x32) and "zoomed in", size invariant input (32x32x32)
 * Runs model inference and saves results to csv
-* Example image and segmentation mask are found in "examples" folder
+
+* Model with weights used in manuscript can be found here: https://drive.google.com/file/d/1BL1s-0NtIbT0BTMBldUbDu_et5QesIzJ/view?usp=share_link (DualNetENE-20220208-1531.h5). Model was trained with Tensorflow v2.4.
+* Example image and segmentation mask can be found within the "examples" folder in the above link
