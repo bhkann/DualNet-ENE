@@ -35,8 +35,8 @@ INPUT_PATH = '~/DualNet-ENE/ENE_preprocess_nrrd' # Path where two nrrds are save
 
 INTERP_DIR = '~/DualNet-ENE/interpolated' + ''.join(str(img_spacing)) # Directory to save interpolated nrrds;
 
-OUTPUT_IMAGE_DIR = '/DualNet-ENE/image_crop' + ''.join(str(spacing))
-OUTPUT_MASK_DIR = '/DualNet-ENE/label_crop' + ''.join(str(spacing))
+OUTPUT_IMAGE_DIR = '/DualNet-ENE/image_crop' + ''.join(str(img_spacing))
+OUTPUT_MASK_DIR = '/DualNet-ENE/label_crop' + ''.join(str(img_spacing))
 
 dataset = 'TestCases' # Label for the test dataset
 
